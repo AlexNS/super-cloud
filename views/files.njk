@@ -14,5 +14,14 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Hello World</h1>
+<div class="container-lg px-4"> 
+    <ul>
+        {% for item in folderItems %}
+        <li><a href="/files?folderId={{ item.id }}">
+            {{ item.name }}</a></li>
+        {% else %}
+            <li>Empty folder</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

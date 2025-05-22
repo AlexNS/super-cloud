@@ -46,8 +46,8 @@ app.get('/logout', (req, res) => {
     });
 })
 
-app.use('/files', filesRoutes);
-app.use('/recent', recentRoutes);
+app.use('/files', auth, filesRoutes);
+app.use('/recent', auth, recentRoutes);
 
 seed().then(() => {
     app.listen(3000, () => {
