@@ -1,4 +1,6 @@
- {% block content %}
+ {% extends "layouts/main.njk" %}
+ 
+ {% block breadcrums %}
     <div class="container-fluid px-4">
         <nav aria-label="breadcrumb">
         <ol class="breadcrumb my-0">
@@ -9,4 +11,8 @@
         </ol>
         </nav>
     </div>
+{% endblock %}
+
+{% block content %}
+    <h1>Hello World</h1>
 {% endblock %}

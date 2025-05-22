@@ -7,6 +7,9 @@ import sessionSetup from './setup/session-setup.js';
 import nunjucks from 'nunjucks';
 import auth from './middleware/auth.js';
 
+import filesRoutes from './routes/files-routes.js';
+import recentRoutes from './routes/recent-routes.js';
+
 const app = express();
 
 nunjucks.configure('views', {
@@ -26,13 +29,12 @@ authSetup(app);
 
 
 app.get('/', auth, (req, res) => {
-    res.render('main');
+    res.redirect('/files');
 })
 
 app.get('/login', (req, res) => {
     res.render('login.njk');
 })
-
 
 app.get('/logout', (req, res) => {
     req.logout(function(err) {
@@ -43,6 +45,9 @@ app.get('/logout', (req, res) => {
         });
     });
 })
+
+app.use('/files', filesRoutes);
+app.use('/recent', recentRoutes);
 
 seed().then(() => {
     app.listen(3000, () => {
