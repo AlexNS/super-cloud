@@ -4,12 +4,18 @@ import seed from './db/seed.js';
 
 import authSetup from './setup/auth-setup.js';
 import sessionSetup from './setup/session-setup.js';
-
+import nunjucks from 'nunjucks';
 import auth from './middleware/auth.js';
 
 const app = express();
 
-app.set('view engine', 'ejs');
+nunjucks.configure('views', {
+    autoescape: true,
+    express: app,
+    noCache: true
+});
+
+app.set('view engine', 'njk');
 
 app.use('/', express.static('static'));
 
@@ -24,9 +30,19 @@ app.get('/', auth, (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login.njk');
 })
 
+
+app.get('/logout', (req, res) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        req.session.destroy(function(err) {
+            if (err) { return next(err); }
+            res.redirect('/');
+        });
+    });
+})
 
 seed().then(() => {
     app.listen(3000, () => {
