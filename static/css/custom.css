@@ -1,0 +1,19 @@
+.files-time-column {
+    width: 100px;
+}
+
+.files-actions-column {
+    width: 100px;
+}
+
+.files-icon-column {
+    width: 50px;
+}
+
+.files-table tr {
+    vertical-align: middle;
+}
+
+.create-folder-input {
+    width: 50vw;
+}

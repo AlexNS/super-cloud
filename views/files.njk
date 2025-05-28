@@ -13,15 +13,76 @@
     </div>
 {% endblock %}
 
-{% block content %}
-<div class="container-lg px-4"> 
-    <ul>
-        {% for item in folderItems %}
-        <li><a href="/files?folderId={{ item.id }}">
-            {{ item.name }}</a></li>
-        {% else %}
-            <li>Empty folder</li>
-        {% endfor %}
-    </ul>
-</div>
+{% block topMenu %}
+<li class="nav-item">
+    <a class="btn btn-primary" data-coreui-toggle="modal" data-coreui-target="#createFolderModal">Create Folder</a>
+</li>
+<li class="nav-item ms-1">
+    <form action="/files/upload-file" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="parentFolderId" value="{{currentFolder.id}}" />
+      <input type="file" name="file" />
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</li>
 {% endblock %}
+
+{% block content %}
+<div class="w-100 p-3">
+    <table class="table files-table">
+        <tbody>
+            {% for item in folderItems %}
+                {% if item.type == 1 %}
+                <tr>
+                    <td class="files-icon-column">
+                        <i class="icon icon-xxl m-1 cil-folder"></i>
+                    </td>
+                    <td><a href="/files?folderId={{ item.id }}">{{ item.name }}</a></td>
+                    <td class="files-time-column">time</td>
+                    <td class="files-actions-column">actions...</td>
+                </tr>
+                {% else %}
+                 <tr>
+                    <td class="files-icon-column">
+                        <div class="fi fi-{{item.extension.substring(1)}}">
+                            <div class="fi-content">{{item.extension}}</div>
+                        </div>
+                    </td>
+                    <td><a href="/files/download?fileId={{ item.id }}">{{ item.name }}</a></td>
+                    <td class="files-time-column">{{item.size}}</td>
+                    <td class="files-actions-column">actions...</td>
+                </tr>
+                {% endif %}
+                
+            {% else %}
+                <tr><td>Empty folder</td></tr>
+            {% endfor %}        
+        </tbody>
+    </table>
+<div>
+{% endblock %} 
+
+{% block basement %}
+<div class="modal fade" id="createFolderModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="POST" action="/files/create-folder">
+            <input type="hidden" name="parentFolderId" value="{{currentFolder.id}}" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Create Folder</h5>
+                    <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 create-folder-input">
+                        <label class="form-label" for="folderNameInput">Enter folder name</label>
+                        <input class="form-control" id="folderNameInput" name="newFolderName" type="text" placeholder="folder name...">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

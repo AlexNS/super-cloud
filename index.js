@@ -50,7 +50,7 @@ app.use('/files', auth, filesRoutes);
 app.use('/recent', auth, recentRoutes);
 
 seed().then(() => {
-    app.listen(3000, () => {
+    app.listen(4000, () => {
         console.log('Server started!')
     })
 })
