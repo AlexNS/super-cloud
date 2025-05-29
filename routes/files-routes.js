@@ -46,7 +46,7 @@ router.post('/create-folder', async (req, res) => {
 
     const root = await storage.getFolderById(parentFolderId, req.user.id);
 
-    storage.createFodler(newFolderName, root);
+    await storage.createFodler(newFolderName, root);
 
     res.redirect(`/files?folderId=${parentFolderId}`);
 })
@@ -60,6 +60,17 @@ router.post('/upload-file', upload.single('file'), async (req, res) => {
         req.file.size, req.file.path);
 
     res.redirect(`/files?folderId=${parentFolderId}`);
+})
+
+router.post('/delete-file', async (req, res) => {
+    const fileId = parseInt(req.query.fileId);
+    const folderId = parseInt(req.query.folderId);
+
+    const user = req.user;
+    
+    await storage.deleteFileById(fileId, user.id);
+
+    res.redirect(`/files?folderId=${folderId}`);
 })
 
 export default router;

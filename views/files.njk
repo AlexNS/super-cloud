@@ -57,8 +57,8 @@
                         <i class="icon icon-xxl m-1 cil-folder"></i>
                     </td>
                     <td><a href="/files?folderId={{ item.id }}">{{ item.name }}</a></td>
-                    <td class="files-time-column">time</td>
-                    <td class="files-actions-column">actions...</td>
+                    <td class="files-time-column"></td>
+                    <td class="files-actions-column"></td>
                 </tr>
                 {% else %}
                  <tr>
@@ -69,7 +69,15 @@
                     </td>
                     <td><a href="/files/download?fileId={{ item.id }}">{{ item.name }}</a></td>
                     <td class="files-time-column">{{fsize(item.size)}}</td>
-                    <td class="files-actions-column">actions...</td>
+                    <td class="files-actions-column">
+                        <form method="POST" action="/files/delete-file?fileId={{item.id}}&amp;folderId={{currentFolder.id}}">
+                            <button class="btn btn-link" type="submit">
+                            <svg class="icon me-2">
+                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-x-circle"></use>
+                            </svg>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 {% endif %}
                 

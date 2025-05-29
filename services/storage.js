@@ -15,23 +15,7 @@ export async function getFolderById(folderId, userId) {
         })
         : await StorageItem.findOne({
             where: {
-                name: '',
-                path: '',
-                UserId: userId
-            }
-        });
-}
-
-export async function getFolderItems(folder) {
-    return await StorageItem.findAll({
-        where: {
-            path: makePath(folder.path, folder.name),
-            UserId: folder.UserId
-        },
-        order: [
-            ['type', 'ASC'],
-            ['name', 'ASC']
-        ]
+                name: '',StorageItem
     });
 }
 
@@ -43,6 +27,14 @@ export async function getFileById(fileId, userId) {
             UserId: userId
         }
     });
+}
+
+export async function deleteFileById(fileId, userId) {
+    const file = await getFileById(fileId, userId);
+
+    if (file) {
+        await file.destroy();
+    }
 }
 
 export async function createFolder(newFolderName, rootFolder) {
