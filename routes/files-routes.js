@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import upload from '../middleware/multer.js';
+import fsize from '../helpers/filesize.js';
 
 import * as storage from '../services/storage.js';
 
@@ -17,7 +18,8 @@ router.get('/', async (req, res) => {
     const model = {
         currentFolder: root,
         folderItems: items,
-        breadcrumbs
+        breadcrumbs,
+        fsize
     }
 
     res.render('files', model);

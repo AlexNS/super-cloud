@@ -55,14 +55,14 @@ export async function createFolder(newFolderName, rootFolder) {
     });
 }
 
-export async function createFile(rootFolder, orignalName, mimeType, 
+export async function createFile(rootFolder, originalName, mimeType, 
     fileSize, filePath) {
     return await StorageItem.create({
         name: originalName,
         type: 2,
         mimeType: mimeType,
         path: makePath(rootFolder.path, rootFolder.name),
-        extension: path.extname(orignalName),
+        extension: path.extname(originalName),
         size: fileSize,
         storagePath: filePath,
         UserId: rootFolder.UserId
