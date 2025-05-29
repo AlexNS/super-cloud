@@ -22,7 +22,7 @@ export default async function seed() {
         where: {
             UserId: adminUser.id,
             path: '',
-            name: '/',
+            name: '',
             type: 1 // folder
         }
     })
@@ -32,7 +32,7 @@ export default async function seed() {
             UserId: adminUser.id,
             path: '',
             type: 1,
-            name: '/',
+            name: '',
             extension: ''
         });
     }

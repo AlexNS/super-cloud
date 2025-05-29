@@ -28,6 +28,26 @@
 
 {% block content %}
 <div class="w-100 p-3">
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb">
+            {% for bc in breadcrumbs %}
+                {% if (bc.name) %}
+                    <li class="breadcrumb-item">
+                        <a href="/files?folderId={{bc.id}}">
+                            {{bc.name}}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="breadcrumb-item">
+                        <a href="/files?folderId={{bc.id}}">
+                            Home
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {# <li class="breadcrumb-item active" aria-current="page">Library</li> #}
+        </ol>
+    </nav>
     <table class="table files-table">
         <tbody>
             {% for item in folderItems %}
